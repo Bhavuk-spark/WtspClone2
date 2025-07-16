@@ -47,12 +47,26 @@ app.use(
 );
 
 //cors
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://whatsapp-clone-frontend-liart.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "https://whatsapp-clone-frontend-liart.vercel.app",
+    origin: function (origin, callback) {
+      // Allow requests with no origin like Postman or curl
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 
 //api v1 routes
 app.use("/api/v1", routes);

@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import mongoose from "mongoose";
 import { Server } from "socket.io";
 import app from "./app.js";
