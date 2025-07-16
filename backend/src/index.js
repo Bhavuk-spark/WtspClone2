@@ -1,46 +1,49 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import mongoose from "mongoose";
 import { Server } from "socket.io";
 import app from "./app.js";
 import logger from "./configs/logger.config.js";
 import SocketServer from "./SocketServer.js";
-//env variables
+import { setupWhatsapp } from "./whatsappClient.js"; // <-- ADD THIS
+
 const { DATABASE_URL } = process.env;
 const PORT = process.env.PORT || 8000;
 
-//exit on mognodb error
 mongoose.connection.on("error", (err) => {
   logger.error(`Mongodb connection error : ${err}`);
   process.exit(1);
 });
 
-//mongodb debug mode
 if (process.env.NODE_ENV !== "production") {
   mongoose.set("debug", true);
 }
 
-//mongodb connection
 mongoose.connect(DATABASE_URL).then(() => {
   logger.info("Connected to Mongodb.");
 });
-let server;
 
-server = app.listen(PORT, () => {
+let server = app.listen(PORT, () => {
   logger.info(`Server is listening at ${PORT}.`);
 });
 
-//socket io
+// socket io
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
     origin: process.env.CLIENT_ENDPOINT,
+    credentials: true,
   },
 });
+
 io.on("connection", (socket) => {
-  logger.info("socket io connected successfully.");
+  logger.info("✅ Socket.io connected");
   SocketServer(socket, io);
 });
+
+// Initialize WhatsApp Web
+setupWhatsapp(io); // <-- ADD THIS
 
 //handle server errors
 const exitHandler = () => {

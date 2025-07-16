@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 lesson objectifs.md
+.wwebjs_cache
+.wwebjs_auth
 # testing
 /coverage
 

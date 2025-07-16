@@ -9,6 +9,7 @@
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js"
   },
   "dependencies": {
+    "@wppconnect/wa-js": "^3.17.7",
     "bcrypt": "^5.1.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -24,9 +25,13 @@
     "mongoose": "^7.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
+    "puppeteer": "^24.13.0",
+    "qrcode": "^1.5.4",
     "socket.io": "^4.6.1",
     "trim-request": "^1.0.6",
     "validator": "^13.9.0",
-    "winston": "^3.8.2"
+    "whatsapp-web.js": "^1.31.0",
+    "winston": "^3.8.2",
+    "wwebjs-mongo": "^1.0.0"
   }
 }
